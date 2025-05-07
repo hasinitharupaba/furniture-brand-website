@@ -5,11 +5,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-
-
-
 import { Button } from "@/components/ui";
 import Link from "next/link";
+import { Armchair } from "lucide-react";
 
 const headerLinks = [
   {
@@ -23,48 +21,66 @@ const headerLinks = [
     link: "/",
     productCategories: [
       {
-        title: "",
-        link: "",
+        title: "Sofa",
+        link: "/products/sofa",
+      },
+      {
+        title: "Low Chair",
+        link: "/products/low-chair",
+      },
+      {
+        title: "Bar Chair",
+        link: "/products/bar-chair",
+      },
+      {
+        title: "Side Chair",
+        link: "/products/side-chair",
       },
     ],
   },
   {
     type: "link",
     title: "About us",
-    link: "/",
+    link: "/about",
   },
   {
     type: "link",
     title: "Contact us",
-    link: "/",
+    link: "/contact",
   },
 ];
 
 export const HeaderNavigation = () => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center space-x-4">
       {headerLinks.map((items, index) => (
         <div key={index}>
           {items.type === "dropdown" ? (
-            <NavigationMenu className="w-full">
-              <NavigationMenuList className="w-full">
+            <NavigationMenu>
+              <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Products</NavigationMenuTrigger>
-                  <NavigationMenuContent className="w-full">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Veniam accusantium maiores at magnam nostrum similique
-                    voluptatibus ad, corporis amet minus quaerat explicabo dolor
-                    rerum earum. Quibusdam earum nihil amet ut!
+                  <NavigationMenuTrigger>{items.title}</NavigationMenuTrigger>
+                  <NavigationMenuContent className="p-4 w-full">
+                    <ul className="flex flex-col">
+                      {items.productCategories?.map((item, idx) => (
+                        <li key={idx}>
+                          <Link href={item.link}>
+                            <Button variant="link" className="w-full font-normal justify-start hover:bg-brand-100">
+                              <Armchair strokeWidth={1.5} />
+                              {item.title}
+                            </Button>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           ) : (
-            <div className="flex">
-              <Link href={items.link}>
-                <Button variant="link">{items.title}</Button>
-              </Link>
-            </div>
+            <Link href={items.link}>
+              <Button variant="link">{items.title}</Button>
+            </Link>
           )}
         </div>
       ))}
